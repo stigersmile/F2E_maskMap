@@ -1,0 +1,20 @@
+extends ./_layout.pug
+
+block content
+	.p-wrap
+		.p-sidebar
+			a#btnId(href="#").c-sideButton
+			nav.p-nav
+				.h-d-flex
+					h2#week.h1.h-flex-1 星期二
+					div
+						p#date.h4.h-text-right.h-mb-1 2020-02-22
+						p.h6 身分證末碼為<strong class="h3 h-text-notice h-mx-1" id="idCard">2,4,6,8,0</strong>可購買
+				.h-d-flex.h-my-2
+					select#county(name="county").p-select
+					select#countyTown(name="countyTown").p-select
+				#search.c-shrinkIcon
+					input#searchText(type="text" name="search" placeholder="搜尋地址..." ).c-shrinkIcon__input
+					a(href="#").c-shrinkIcon__icon.fas.fa-search
+			#sideData.p-sideContent
+		.p-map#mapId
