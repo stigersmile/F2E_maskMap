@@ -52,8 +52,6 @@ let _map = {};
   }
 })()
 
-
-
 /**
  * Controller
  */
@@ -132,7 +130,7 @@ function clickBar(e) {
       return 'h-bg-secondary'
     }
   })()
-  _map.panTo([lat, lng])
+  _map.panTo([lat, lng]).setZoom(18)
   L.popup()
     .setLatLng([lat, lng])
     .setContent(`

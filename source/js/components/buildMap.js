@@ -1,7 +1,7 @@
 function buildMap() {
   _map = L.map('mapId', {
     center: [25.04828, 121.51435],
-    zoom: 12,
+    zoom: 16,
     zoomControl: false
   });
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}
