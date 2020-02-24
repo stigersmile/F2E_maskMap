@@ -9,7 +9,6 @@ function buildMap() {
   ).addTo(_map)
   // 使用 control.locate 套件
   L.control.locate({
-    showPopup: false,
-    flyTo: true
+    showPopup: false
   }).addTo(_map).start();
 }
