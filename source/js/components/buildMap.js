@@ -6,5 +6,8 @@ function buildMap() {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}
   ).addTo(_map)
   // 使用 control.locate 套件
-  L.control.locate().addTo(_map).start();
+  L.control.locate({
+    showPopup: false,
+    flyTo: true
+  }).addTo(_map).start();
 }

@@ -14,6 +14,5 @@ function getDate() {
   // view
 
   const dateStr = `${today.getFullYear()}-${month}-${today.getDate()}`
-  console.log(dateStr)
   date.textContent = dateStr
 }
