@@ -147,7 +147,7 @@ function clickBar(e) {
 		</div>
 		`)
     .openOn(_map);
-  if (screen.width < 768) {
+  if (innerWidth < 768) {
     sideBarOpenAndClose()
   }
 }
