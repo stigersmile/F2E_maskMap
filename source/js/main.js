@@ -23,7 +23,7 @@ let _map = {};
   const request = new XMLHttpRequest();
   request.open('get', 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json');
   request.send(null);
-  request.onload = () => {
+  request.onreadystatechange = () => {
     // 如果回應已完成 4 並且已成功 200 。
     if (request.readyState === 4 && request.status === 200) {
       // 以 JSON 解析字串轉為物件
@@ -34,24 +34,24 @@ let _map = {};
       for (let i = 0; jsonLen > i; i++) {
         _data.push(json.features[i]);
       }
+      const areaData = area.filter(function (element) {
+        return element.CityName === '臺北市'
+      })
+      const pharmacyData = _data.filter(function (element) {
+        return element.properties.town === '中正區'
+          && element.properties.county === '臺北市'
+      })
+      getDate()
+      getWeekAndIdCard()
+      upDataCounty(area)
+      upDataTown(areaData)
+      // 參數帶入資料庫
+      upDataSidebar(pharmacyData)
+      buildMap()
+      addMarker(_data)
+      const loading = document.querySelector('.c-loading')
+      loading.setAttribute('style', 'display: none')
     }
-    const areaData = area.filter(function (element) {
-      return element.CityName === '臺北市'
-    })
-    const pharmacyData = _data.filter(function (element) {
-      return element.properties.town === '中正區'
-        && element.properties.county === '臺北市'
-    })
-    getDate()
-    getWeekAndIdCard()
-    upDataCounty(area)
-    upDataTown(areaData)
-    // 參數帶入資料庫
-    upDataSidebar(pharmacyData)
-    buildMap()
-    addMarker(_data)
-    const loading = document.querySelector('.c-loading')
-    loading.setAttribute('style', 'display: none')
   }
 })()
 
