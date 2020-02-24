@@ -1,7 +1,22 @@
-# 口罩地圖 
+# 口罩地圖
 
+## 功能
 
+- 城市、地區選單選取
+- 搜尋地址
+- 即時定位
+- 智能判別 icon - 藍色有庫存 - 紅色單一商品 0 庫存 - 灰色全數商品 0 庫存
+- 支援不同裝置瀏覽體驗
 
+## 技術
+
+- openstreetmap 圖資
+- leaflet 框架
+- leaflet markercluster 套件
+- leaflet Locate 套件
+- pug
+- scss
+- gulp
 
 ## 安裝與運行
 
@@ -23,4 +38,5 @@ gulp deploy # 將靜態網頁佈署到 gh-pages
 ```
 
 ## 聲明
+
 - 設計稿來自 [F2E 投稿設計師 - Wendy](https://challenge.thef2e.com/user/2259)
