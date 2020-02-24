@@ -147,7 +147,9 @@ function clickBar(e) {
 		</div>
 		`)
     .openOn(_map);
-  sideBarOpenAndClose()
+  if (screen.width < 768) {
+    sideBarOpenAndClose()
+  }
 }
 
 _county.addEventListener('change', changeCounty)
