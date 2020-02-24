@@ -54,6 +54,10 @@
     border: none;
     padding: 0px 10px;
     border-radius: 20px;
+    appearance: none;
+    background: #fff url("../images/baseline_arrow_drop_down_black_18dp.png")
+      no-repeat 95% center;
+    background-size: 24px;
     & + .p-select {
       margin-left: 0.5rem;
     }
