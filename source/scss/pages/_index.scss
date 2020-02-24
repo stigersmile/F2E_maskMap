@@ -1,7 +1,7 @@
-// 定位
 .p-wrap {
   position: relative;
 }
+
 // 側邊攔
 .p-sidebar {
   position: absolute;
@@ -118,4 +118,11 @@
       margin-left: 1rem;
     }
   }
+}
+
+.p-locateBtn {
+  position: absolute;
+  top: 5rem;
+  right: 0.55rem;
+  z-index: 9999;
 }

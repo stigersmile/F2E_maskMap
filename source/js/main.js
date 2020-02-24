@@ -8,7 +8,6 @@ const _sideBarSwitchBtn = document.querySelector('#btnId')
 const _sideData = document.querySelector('#sideData')
 const _search = document.querySelector('#search')
 
-
 /**
  * Model
  */
@@ -43,12 +42,16 @@ let _map = {};
       return element.properties.town === '中正區'
         && element.properties.county === '臺北市'
     })
+    getDate()
+    getWeekAndIdCard()
     upDataCounty(area)
     upDataTown(areaData)
     // 參數帶入資料庫
     upDataSidebar(pharmacyData)
     buildMap()
     addMarker(_data)
+    const loading = document.querySelector('.c-loading')
+    loading.setAttribute('style', 'display: none')
   }
 })()
 
@@ -71,12 +74,9 @@ function changeCounty(e) {
   const pharmacyData = _data.filter(function (element) {
     return element.properties.county === e.target.value
   })
-  upDataTown(areaData)
-  // 刪除 l.Marker 圖層
-  removerMarker()
   // 參數帶入資料庫
+  upDataTown(areaData)
   upDataSidebar(pharmacyData)
-  addMarker(pharmacyData)
   popupOpenOn(pharmacyData)
 }
 
@@ -84,11 +84,8 @@ function changeTown(e) {
   const pharmacyData = _data.filter(function (element) {
     return element.properties.town === e.target.value
   })
-  // 刪除 l.Marker 圖層
-  removerMarker()
   // 參數帶入資料庫
   upDataSidebar(pharmacyData)
-  addMarker(pharmacyData)
   popupOpenOn(pharmacyData)
 }
 
@@ -103,7 +100,6 @@ function searchAddress(e) {
   })
   upDataSidebar(pharmacyData)
 }
-
 function clickBar(e) {
   if (e.target.id !== 'path') { return }
   // 阻止元素默認的行為
@@ -130,7 +126,7 @@ function clickBar(e) {
       return 'h-bg-secondary'
     }
   })()
-  _map.panTo([lat, lng]).setZoom(18)
+  _map.setView([lat, lng], 16)
   L.popup()
     .setLatLng([lat, lng])
     .setContent(`
@@ -151,11 +147,11 @@ function clickBar(e) {
 		</div>
 		`)
     .openOn(_map);
+  sideBarOpenAndClose()
 }
 
 _county.addEventListener('change', changeCounty)
 _countyTown.addEventListener('change', changeTown)
 _search.addEventListener('click', searchAddress)
 _sideData.addEventListener('click', clickBar)
-
 _sideBarSwitchBtn.addEventListener('click', sideBarOpenAndClose)

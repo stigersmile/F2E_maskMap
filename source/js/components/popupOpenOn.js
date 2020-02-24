@@ -16,7 +16,7 @@ function popupOpenOn(importData) {
       return 'h-bg-secondary'
     }
   })()
-  _map.panTo([lat, lng]).setZoom(16)
+  _map.setView([lat, lng], 16)
   L.popup()
     .setLatLng([lat, lng])
     .setContent(`

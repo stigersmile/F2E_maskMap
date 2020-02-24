@@ -2,29 +2,29 @@ function getWeekAndIdCard() {
   // DOM
   const week = document.querySelector('#week')
   const idCard = document.querySelector('#idCard')
-  const weekStr = today.getDay();
+  const today = new Date().getDay();
   switch (true) {
-    case weekStr === 1:
+    case today === 1:
       week.textContent = '星期一'
       idCard.textContent = '1,3,5,7,9'
       break
-    case weekStr === 2:
+    case today === 2:
       week.textContent = '星期二'
       idCard.textContent = '0,2,4,6,8'
       break
-    case weekStr === 3:
+    case today === 3:
       week.textContent = '星期三'
       idCard.textContent = '1,3,5,7,9'
       break
-    case weekStr === 4:
+    case today === 4:
       week.textContent = '星期四'
       idCard.textContent = '0,2,4,6,8'
       break
-    case weekStr === 5:
+    case today === 5:
       week.textContent = '星期五'
       idCard.textContent = '1,3,5,7,9'
       break
-    case weekStr === 6:
+    case today === 6:
       week.textContent = '星期六'
       idCard.textContent = '0,2,4,6,8'
       break
