@@ -1,6 +1,6 @@
 function addMarker(importData) {
 	// marker群組管理
-	let markers = new L.MarkerClusterGroup().addTo(_map);
+	let markers = new L.MarkerClusterGroup();
 	importData.forEach((element) => {
 		//解構賦值寫法，宣告要從來源變數(element)接收解開的值之變數。
 		const { geometry, properties } = element
@@ -71,6 +71,6 @@ function addMarker(importData) {
 		  </div>
 		</div>
 		`))
-		_map.addLayer(markers)
 	})
+	_map.addLayer(markers)
 }
