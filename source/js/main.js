@@ -36,10 +36,12 @@ let _selectedCounty = '台北市';
         _data.push(json.features[i]);
       }
       const areaData = area.filter(function (element) {
-        return element.CityName === '台北市'
+        return element.CityName === _selectedCounty
       })
       const pharmacyData = _data.filter(function (element) {
-        return element.properties.address.match('台北市中正區')
+        // 預設未使用定位是會抓取 _selectedCounty 資料
+        // 移動至 _selectedCounty 陣列第 0 筆 經緯度
+        return element.properties.address.match(_selectedCounty)
       })
       getDate()
       getWeekAndIdCard()
