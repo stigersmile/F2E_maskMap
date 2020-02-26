@@ -14,7 +14,7 @@ const _search = document.querySelector('#search')
 
 const _data = [];
 let _map = {};
-let _selectedCounty = '';
+let _selectedCounty = '台北市';
 
 /**
  * init
@@ -74,6 +74,7 @@ function changeCounty(e) {
     return element.CityName === _selectedCounty
   })
   const pharmacyData = _data.filter(function (element) {
+    // 以地址欄搜尋 _selectedCounty 字串
     return element.properties.address.match(_selectedCounty)
   })
   // 參數帶入資料庫
@@ -83,14 +84,24 @@ function changeCounty(e) {
 }
 
 function changeTown(e) {
-  // 已選擇 城市 + 已選擇 地區
-  const countyAndTownStr = _selectedCounty + e.target.value
-  const pharmacyData = _data.filter(function (element) {
-    return element.properties.address.match(countyAndTownStr)
-  })
-  // 參數帶入資料庫
-  upDataSidebar(pharmacyData)
-  popupOpenOn(pharmacyData)
+  // 預設選項第一個會是全部地區
+  if (e.target.value === '全部地區') {
+    const pharmacyData = _data.filter(function (element) {
+      return element.properties.address.match(_selectedCounty)
+    })
+    // 參數帶入資料庫
+    upDataSidebar(pharmacyData)
+    popupOpenOn(pharmacyData)
+  } else {
+    // 已選擇 城市 + 已選擇 地區
+    const countyAndTownStr = _selectedCounty + e.target.value
+    const pharmacyData = _data.filter(function (element) {
+      return element.properties.address.match(countyAndTownStr)
+    })
+    // 參數帶入資料庫
+    upDataSidebar(pharmacyData)
+    popupOpenOn(pharmacyData)
+  }
 }
 
 function searchAddress(e) {
