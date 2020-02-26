@@ -31,7 +31,7 @@ let _selectedCounty = '台北市';
       const json = JSON.parse(request.responseText);
       // 抓取資料層陣列長度
       const jsonLen = json.features.length;
-      // 使用 for 迴圈 以索引值 push 到 allData 全地區資料庫
+      // 使用 for 迴圈 以索引值 push 到 資料庫
       for (let i = 0; jsonLen > i; i++) {
         _data.push(json.features[i]);
       }
