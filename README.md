@@ -47,3 +47,7 @@ gulp deploy # 將靜態網頁佈署到 gh-pages
 ## 聲明
 
 - 設計稿來自 [F2E 投稿設計師 - Wendy](https://challenge.thef2e.com/user/2259)
+
+## 筆記
+
+- 本次專案過程收錄在 https://albertnotes.github.io/category/20200226/1536962204/ 
