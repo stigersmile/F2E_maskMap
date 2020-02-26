@@ -14,6 +14,7 @@ const _search = document.querySelector('#search')
 
 const _data = [];
 let _map = {};
+let _selectedCounty = '';
 
 /**
  * init
@@ -35,11 +36,10 @@ let _map = {};
         _data.push(json.features[i]);
       }
       const areaData = area.filter(function (element) {
-        return element.CityName === '臺北市'
+        return element.CityName === '台北市'
       })
       const pharmacyData = _data.filter(function (element) {
-        return element.properties.town === '中正區'
-          && element.properties.county === '臺北市'
+        return element.properties.address.match('台北市中正區')
       })
       getDate()
       getWeekAndIdCard()
@@ -67,12 +67,14 @@ function sideBarOpenAndClose() {
 }
 
 function changeCounty(e) {
+  // 已選擇城市
+  _selectedCounty = e.target.value
   // 藥局資料庫不全使用外部資料 data.js
   const areaData = area.filter(function (element) {
-    return element.CityName === e.target.value
+    return element.CityName === _selectedCounty
   })
   const pharmacyData = _data.filter(function (element) {
-    return element.properties.county === e.target.value
+    return element.properties.address.match(_selectedCounty)
   })
   // 參數帶入資料庫
   upDataTown(areaData)
@@ -81,8 +83,10 @@ function changeCounty(e) {
 }
 
 function changeTown(e) {
+  // 已選擇 城市 + 已選擇 地區
+  const countyAndTownStr = _selectedCounty + e.target.value
   const pharmacyData = _data.filter(function (element) {
-    return element.properties.town === e.target.value
+    return element.properties.address.match(countyAndTownStr)
   })
   // 參數帶入資料庫
   upDataSidebar(pharmacyData)
@@ -100,6 +104,7 @@ function searchAddress(e) {
   })
   upDataSidebar(pharmacyData)
 }
+
 function clickBar(e) {
   if (e.target.id !== 'path') { return }
   // 阻止元素默認的行為
