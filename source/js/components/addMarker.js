@@ -32,10 +32,10 @@ const addMarker = importData => {
           popupAnchor: [1, -34],
           shadowSize: [41, 41]
         });
-      } else if (properties.mask_adult === 0 || properties.mask_child === 0) {
+      } else if (properties.mask_adult === 0 && properties.mask_child === 0) {
         return new L.Icon({
           iconUrl:
-            'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
           shadowUrl:
             'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
           iconSize: [25, 41],
@@ -46,7 +46,7 @@ const addMarker = importData => {
       } else {
         return new L.Icon({
           iconUrl:
-            'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+            'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
           shadowUrl:
             'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
           iconSize: [25, 41],
