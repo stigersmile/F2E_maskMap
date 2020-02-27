@@ -1,10 +1,10 @@
-function upDataCounty(areaData) {
+const upDataCounty = importData => {
   let str = '';
-  for (let i = 0; i < areaData.length; i++) {
+  importData.forEach(element => {
     str += `
-    <option value="${areaData[i].CityName}">
-    ${areaData[i].CityName}</option>
-		`
-  }
+    <option value="${element.CityName}">
+    ${element.CityName}</option>
+		`;
+  });
   county.innerHTML = str;
 };

@@ -1,4 +1,4 @@
-function getDate() {
+const getDate = () => {
   // DOM
   const date = document.querySelector('#date')
   const today = new Date()
@@ -12,7 +12,6 @@ function getDate() {
     }
   })()
   // view
-
   const dateStr = `${today.getFullYear()}-${month}-${today.getDate()}`
   date.textContent = dateStr
 }

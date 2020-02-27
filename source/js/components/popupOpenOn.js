@@ -1,25 +1,26 @@
-function popupOpenOn(importData) {
-  const lat = importData[0].geometry.coordinates[1]
-  const lng = importData[0].geometry.coordinates[0]
+const popupOpenOn = importData => {
+  const lat = importData[0].geometry.coordinates[1];
+  const lng = importData[0].geometry.coordinates[0];
   // 判斷 background-color
-  const adultStockNoMore = (function () {
+  const adultStockNoMore = (() => {
     if (importData[0].properties.mask_adult === 0) {
-      return 'h-bg-info'
+      return 'h-bg-info';
     } else {
-      return 'h-bg-primary'
+      return 'h-bg-primary';
     }
-  })()
-  const childStockNoMore = (function () {
+  })();
+  const childStockNoMore = (() => {
     if (importData[0].properties.mask_child === 0) {
-      return 'h-bg-info'
+      return 'h-bg-info';
     } else {
-      return 'h-bg-secondary'
+      return 'h-bg-secondary';
     }
-  })()
-  _map.setView([lat, lng], 16)
+  })();
+  map.setView([lat, lng], 16);
   L.popup()
     .setLatLng([lat, lng])
-    .setContent(`
+    .setContent(
+      `
     <div class="p-card" style="max-width: 200px">
       <div class="h-d-flex h-mb-3 h-align-items-center">
         <h2 class="h-flex-1">${importData[0].properties.name}</h2>
@@ -35,6 +36,7 @@ function popupOpenOn(importData) {
         <div class="p-badges ${childStockNoMore}"><span class="h4 h-flex-1">兒童口罩</span><span>${importData[0].properties.mask_child}</span></div>
       </div>
     </div>
-  `)
-    .openOn(_map);
-}
+  `
+    )
+    .openOn(map);
+};

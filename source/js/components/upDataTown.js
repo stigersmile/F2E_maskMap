@@ -1,10 +1,10 @@
-function upDataTown(areaData) {
+const upDataTown = importData => {
   let str = `<option value="全部地區">全部地區</option>`;
-  for (let i = 0; i < areaData[0].AreaList.length; i++) {
+  importData[0].AreaList.forEach(element => {
     str += `
-		<option value="${areaData[0].AreaList[i].AreaName}">
-		${areaData[0].AreaList[i].AreaName}</option>
-		`
-  }
+    <option value="${element.AreaName}">
+    ${element.AreaName}</option>
+    `;
+  });
   countyTown.innerHTML = str;
 };

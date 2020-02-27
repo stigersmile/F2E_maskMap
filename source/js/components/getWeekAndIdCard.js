@@ -1,4 +1,4 @@
-function getWeekAndIdCard() {
+const getWeekAndIdCard = () => {
   // DOM
   const week = document.querySelector('#week')
   const idCard = document.querySelector('#idCard')
