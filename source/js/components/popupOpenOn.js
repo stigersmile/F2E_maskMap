@@ -20,7 +20,7 @@ function popupOpenOn(importData) {
   L.popup()
     .setLatLng([lat, lng])
     .setContent(`
-    <div class="p-card">
+    <div class="p-card" style="max-width: 200px">
       <div class="h-d-flex h-mb-3 h-align-items-center">
         <h2 class="h-flex-1">${importData[0].properties.name}</h2>
         <a class="fas fa-location-arrow h-mr-3" href="https://www.google.com.tw/maps/dir//${importData[0].properties.address}" target="_blank"></a>

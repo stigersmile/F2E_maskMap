@@ -54,8 +54,9 @@ function addMarker(importData) {
 		markers.addLayer(L.marker([
 			geometry.coordinates[1],
 			geometry.coordinates[0]
-		], { icon: iconColor }).bindPopup(`
-		<div class="p-card">
+		], { icon: iconColor })
+			.bindPopup(`
+		<div class="p-card" style="max-width: 200px">
 		  <div class="h-d-flex h-mb-3 h-align-items-center">
 		    <h2 class="h-flex-1">${properties.name}</h2>
 		    <a class="fas fa-location-arrow h-mr-3" href="https://www.google.com.tw/maps/dir//${properties.address}" target="_blank"></a>
