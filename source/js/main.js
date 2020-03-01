@@ -15,6 +15,9 @@ const search = document.querySelector('#search');
 const data = [];
 const map = {};
 let selectedCounty = '台北市';
+// marker群組管理
+const markers = new L.MarkerClusterGroup();
+// let marker;
 
 /**
  * init
@@ -46,7 +49,7 @@ let selectedCounty = '台北市';
       getWeekAndIdCard();
       upDataCounty(area);
       upDataTown(areaData);
-      // 參數帶入資料庫
+      // 以資料庫為參數帶入
       upDataSidebar(pharmacyData);
       buildMap();
       addMarker(data);
@@ -76,13 +79,15 @@ const changeCounty = e => {
     // 以地址欄搜尋 selectedCounty 字串
     element.properties.address.match(selectedCounty)
   );
-  // 參數帶入資料庫
+  // 以資料庫為參數帶入
   upDataTown(areaData);
   if (pharmacyData.length === 0) {
     return alert('查無資料 (o´罒`o)');
   }
+  const lat = pharmacyData[0].geometry.coordinates[1];
+  const lng = pharmacyData[0].geometry.coordinates[0];
   upDataSidebar(pharmacyData);
-  popupOpenOn(pharmacyData);
+  markerOpen(lat, lng);
 };
 
 const changeTown = e => {
@@ -91,18 +96,22 @@ const changeTown = e => {
     const pharmacyData = data.filter(element =>
       element.properties.address.match(selectedCounty)
     );
-    // 參數帶入資料庫
+    const lat = pharmacyData[0].geometry.coordinates[1];
+    const lng = pharmacyData[0].geometry.coordinates[0];
+    // 以資料庫為參數帶入
     upDataSidebar(pharmacyData);
-    popupOpenOn(pharmacyData);
+    markerOpen(lat, lng);
   } else {
     // 已選擇 城市 + 已選擇 地區
     const countyAndTownStr = selectedCounty + e.target.value;
     const pharmacyData = data.filter(element =>
       element.properties.address.match(countyAndTownStr)
     );
-    // 參數帶入資料庫
+    const lat = pharmacyData[0].geometry.coordinates[1];
+    const lng = pharmacyData[0].geometry.coordinates[0];
+    // 以資料庫為參數帶入
     upDataSidebar(pharmacyData);
-    popupOpenOn(pharmacyData);
+    markerOpen(lat, lng);
   }
 };
 
@@ -128,51 +137,10 @@ const clickBar = e => {
   }
   // 阻止元素默認的行為
   e.preventDefault();
-  const lat = e.target.dataset.lat;
-  const lng = e.target.dataset.lng;
-  const name = e.target.dataset.name;
-  const address = e.target.dataset.address;
-  const phone = e.target.dataset.phone;
-  const note = e.target.dataset.note;
-  const adult = e.target.dataset.adult;
-  const child = e.target.dataset.child;
-  const adultStockNoMore = (() => {
-    if (adult === 0) {
-      return 'h-bg-info';
-    } else {
-      return 'h-bg-primary';
-    }
-  })();
-  const childStockNoMore = (() => {
-    if (child === 0) {
-      return 'h-bg-info';
-    } else {
-      return 'h-bg-secondary';
-    }
-  })();
-  map.setView([lat, lng], 16);
-  L.popup()
-    .setLatLng([lat, lng])
-    .setContent(
-      `
-		<div class="p-card" style="max-width: 200px">
-			<div class="h-d-flex h-mb-3 h-align-items-center">
-				<h2 class="h-flex-1">${name}</h2>
-				<a class="fas fa-location-arrow h-mr-3" href="https://www.google.com.tw/maps/dir//${address}" target="_blank"></a>
-			</div>
-			<span class="h4 h-text-dark">${address}</span>
-			<br>
-			<span class="h4 h-text-dark">${phone}</span>
-			<br>
-			<span class="h4 h-text-dark">${note}</span>
-			<div class="h-d-flex h-mt-2">
-				<div class="p-badges ${adultStockNoMore}"><span class="h5 h-flex-1">成人口罩</span><span>${adult}</span></div>
-				<div class="p-badges ${childStockNoMore}"><span class="h5 h-flex-1">兒童口罩</span><span>${child}</span></div>
-			</div>
-		</div>
-		`
-    )
-    .openOn(map);
+  const lat = Number(e.target.dataset.lat);
+  const lng = Number(e.target.dataset.lng);
+  // 以資料庫為參數帶入
+  markerOpen(lat, lng);
   if (innerWidth < 768) {
     sideBarOpenAndClose();
   }

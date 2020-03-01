@@ -22,12 +22,6 @@ const upDataSidebar = importData => {
 				<a class="h1 h-text-primary fas fa-eye h-mr-3" id="path" href="#"
 				data-lat = "${element.geometry.coordinates[1]}"
 				data-lng = "${element.geometry.coordinates[0]}"
-				data-name = "${element.properties.name}"
-				data-address = "${element.properties.address}"
-				data-phone = "${element.properties.phone}"
-				data-note = "${element.properties.note}"
-				data-adult = "${element.properties.mask_adult}"
-				data-child = "${element.properties.mask_child}"
 				></a>
 				<a class="fas fa-location-arrow" href="https://www.google.com.tw/maps/dir//${element.properties.address}" target="_blank"></a>
 			</div>

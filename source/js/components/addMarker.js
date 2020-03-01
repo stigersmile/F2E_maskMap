@@ -1,6 +1,4 @@
 const addMarker = importData => {
-  // marker群組管理
-  let markers = new L.MarkerClusterGroup();
   importData.forEach(element => {
     //解構賦值寫法，宣告要從來源變數(element)接收解開的值之變數。
     const { geometry, properties } = element;
@@ -61,22 +59,22 @@ const addMarker = importData => {
       L.marker([geometry.coordinates[1], geometry.coordinates[0]], {
         icon: iconColor
       }).bindPopup(`
-		<div class="p-card" style="max-width: 200px">
-		  <div class="h-d-flex h-mb-3 h-align-items-center">
-		    <h2 class="h-flex-1">${properties.name}</h2>
-		    <a class="fas fa-location-arrow h-mr-3" href="https://www.google.com.tw/maps/dir//${properties.address}" target="_blank"></a>
-		  </div>
-		  <span class="h4 h-text-dark">${properties.address}</span>
-		  <br>
-		  <span class="h4 h-text-dark">${properties.phone}</span>
-		  <br>
-		  <span class="h4 h-text-dark">${properties.note}</span>
-		  <div class="h-d-flex h-mt-2">
-		    <div class="p-badges ${adultStockNoMore}"><span class="h5 h-flex-1">成人口罩</span><span>${properties.mask_adult}</span></div>
-		    <div class="p-badges ${childStockNoMore}"><span class="h5 h-flex-1">兒童口罩</span><span>${properties.mask_child}</span></div>
-		  </div>
-		</div>
-		`)
+  <div class="p-card" style="max-width: 200px">
+    <div class="h-d-flex h-mb-3 h-align-items-center">
+      <h2 class="h-flex-1">${properties.name}</h2>
+      <a class="fas fa-location-arrow h-mr-3" href="https://www.google.com.tw/maps/dir//${properties.address}" target="_blank"></a>
+    </div>
+    <span class="h4 h-text-dark">${properties.address}</span>
+    <br>
+    <span class="h4 h-text-dark">${properties.phone}</span>
+    <br>
+    <span class="h4 h-text-dark">${properties.note}</span>
+    <div class="h-d-flex h-mt-2">
+      <div class="p-badges ${adultStockNoMore}"><span class="h5 h-flex-1">成人口罩</span><span>${properties.mask_adult}</span></div>
+      <div class="p-badges ${childStockNoMore}"><span class="h5 h-flex-1">兒童口罩</span><span>${properties.mask_child}</span></div>
+    </div>
+  </div>
+  `)
     );
   });
   map.addLayer(markers);
