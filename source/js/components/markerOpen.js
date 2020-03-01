@@ -1,6 +1,6 @@
 const markerOpen = (lat, lng) => {
   // 搜尋 markers 圖層下的子圖層
-  markers.eachLayer(function(layer) {
+  markers.eachLayer(layer => {
     // 抓取圖層的 經緯度
     const eachLat = layer._latlng.lat;
     const eachLng = layer._latlng.lng;
@@ -8,10 +8,10 @@ const markerOpen = (lat, lng) => {
     if (eachLat === lat && eachLng === lng) {
       // zoomToShowLayer 這個是 MarkerClusterGroup 給的函式
       // 方法是調用 MarkerClusterGroup 下的子圖層
-      markers.zoomToShowLayer(layer, function() {
+      markers.zoomToShowLayer(layer, () =>
         // 打開 bindPopup 的 HTML
-        layer.openPopup();
-      });
+        layer.openPopup()
+      );
     }
   });
 };
