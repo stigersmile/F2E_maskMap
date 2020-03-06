@@ -1,10 +1,9 @@
-const upDataCounty = importData => {
+const upDataCounty = (importData) => {
   let str = '';
-  importData.forEach(element => {
+  importData.forEach((element) => {
     str += `
     <option value="${element.CityName}">
-    ${element.CityName}</option>
-		`;
+    ${element.CityName}</option>`;
   });
   county.innerHTML = str;
 };

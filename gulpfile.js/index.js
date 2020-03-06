@@ -2,15 +2,15 @@
  * gulp 4.0、CommonJS 寫法 -  引入模組
  * 可輸入指令壓縮執行 --env production
  *****************************************************/
-const gulp = require("gulp");
-const del = require("del");
-const autoprefixer = require("autoprefixer");
-const browserSync = require("browser-sync");
-const { options } = require("./options");
-// const { vendorJS } = require("./vendorJS");
+const gulp = require('gulp');
+const del = require('del');
+const autoprefixer = require('autoprefixer');
+const browserSync = require('browser-sync');
+const { options } = require('./options');
+// const { vendorJS } = require('./vendorJS');
 
 // gulp 管理 gulp-*套件
-const $ = require("gulp-load-plugins")();
+const $ = require('gulp-load-plugins')();
 
 /*****************************************************
  * 複製檔案 block
@@ -19,15 +19,15 @@ const $ = require("gulp-load-plugins")();
 function copy() {
   return gulp
     .src([
-      "./source/**/**",
-      "!source/*.pug",
-      "!source/scss/**/**",
-      "!source/js/**/**"
+      './source/**/**',
+      '!source/*.pug',
+      '!source/scss/**/**',
+      '!source/js/**/**'
     ])
-    .pipe(gulp.dest("./public"))
+    .pipe(gulp.dest('./public'))
     .pipe(
       $.if(
-        options.env === "production",
+        options.env === 'production',
         browserSync.reload({
           stream: true
         })
@@ -37,8 +37,8 @@ function copy() {
 
 function copyBsVar() {
   return gulp
-    .src("./node_modules/bootstrap/scss/_variables.scss")
-    .pipe(gulp.dest("./source/scss/helpers"));
+    .src('./node_modules/bootstrap/scss/_variables.scss')
+    .pipe(gulp.dest('./source/scss/helpers'));
 }
 
 /*****************************************************
@@ -46,7 +46,10 @@ function copyBsVar() {
  *****************************************************/
 
 function clean() {
-  return del("./public");
+  return del('./public')
+}
+function cleanJS() {
+  return del('./source/js/all.js')
 }
 
 /*****************************************************
@@ -55,12 +58,12 @@ function clean() {
 
 function pug() {
   return gulp
-    .src("./source/**/!(_)*.pug")
+    .src('./source/**/!(_)*.pug')
     .pipe($.plumber())
     // .pipe(
     //   $.data(function () {
     //   const json = require('../source/data/data.json');
-    //   const menu = require("../source/data/menu.json");
+    //   const menu = require('../source/data/menu.json');
     //     const source = {
     //       data: json,
     //       menu: menu
@@ -70,7 +73,7 @@ function pug() {
     //   })
     // )
     .pipe($.pug({ pretty: true }))
-    .pipe(gulp.dest("./public"))
+    .pipe(gulp.dest('./public'))
     .pipe(
       browserSync.reload({
         stream: true
@@ -87,23 +90,23 @@ function scss() {
   const processors = [autoprefixer()];
   return (
     gulp
-      .src(["./source/scss/**/*.sass", "./source/scss/**/*.scss"])
+      .src(['./source/scss/**/*.sass', './source/scss/**/*.scss'])
       // 建立 sourcemaps 開始紀錄原始碼位置
       .pipe($.plumber())
       .pipe($.sourcemaps.init())
       // 抓取 bootstrap
       .pipe(
         $.sass({
-          outputStyle: "nested",
-          includePaths: ["./node_modules/bootstrap/scss"]
-        }).on("error", $.sass.logError)
+          outputStyle: 'nested',
+          includePaths: ['./node_modules/bootstrap/scss']
+        }).on('error', $.sass.logError)
       )
       .pipe($.postcss(processors))
       // 開發環境是 production 執行壓縮 CSS
-      .pipe($.if(options.env === "production", $.cleanCss()))
+      .pipe($.if(options.env === 'production', $.cleanCss()))
       // 新增.map 寫入 sourcemaps 紀錄
-      .pipe($.sourcemaps.write("."))
-      .pipe(gulp.dest("./public/css"))
+      .pipe($.sourcemaps.write('.'))
+      .pipe(gulp.dest('./public/css'))
       .pipe(
         browserSync.reload({
           stream: true
@@ -116,31 +119,44 @@ function scss() {
  * JavaScript 處理 block
  *****************************************************/
 
+function concatJS(){
+    return(
+      gulp
+        .src('./source/**/*.js')
+        .pipe(
+          // 依 MVC 設計模式排序
+          $.order([
+            'js/data/*.js',
+            'js/utils/*.js',
+            'js/components/*.js',
+            'js/controller/*.js',
+          ])
+        )
+        .pipe($.concat('all.js'))
+        .pipe(gulp.dest('./source/js'))
+        .pipe(
+          browserSync.reload({
+            stream: true
+          })
+        )
+    );
+}
+
 function babel() {
   return (
     gulp
-      .src("./source/**/*.js")
+      .src('./source/**/all.js')
       // 建立 sourcemaps 開始紀錄原始碼位置
       .pipe($.plumber())
-      .pipe($.sourcemaps.init())
       .pipe(
         $.babel({
-          presets: ["@babel/env"]
+          presets: ['@babel/env']
         })
       )
       .pipe(
-        // 依 MVC 設計模式排序
-        $.order([
-          "js/data/*.js",
-          "js/main.js",
-          "js/components/*.js"
-        ])
-      )
-      .pipe($.concat("all.js"))
-      .pipe(
         // 開發環境是 production 執行壓縮 Js
         $.if(
-          options.env === "production",
+          options.env === 'production',
           $.uglify({
             compress: {
               drop_console: true
@@ -148,9 +164,7 @@ function babel() {
           })
         )
       )
-      // 新增.map 寫入 sourcemaps 紀錄
-      .pipe($.sourcemaps.write("."))
-      .pipe(gulp.dest("./public/js"))
+      .pipe(gulp.dest('./public'))
       .pipe(
         browserSync.reload({
           stream: true
@@ -165,9 +179,9 @@ function babel() {
 
 function imageMin() {
   return gulp
-    .src("./source/images/**")
-    .pipe($.if(options.env === "production", $.imagemin()))
-    .pipe(gulp.dest("./public/images"));
+    .src('./source/images/**')
+    .pipe($.if(options.env === 'production', $.imagemin()))
+    .pipe(gulp.dest('./public/images'));
 }
 
 /*****************************************************
@@ -177,26 +191,29 @@ function imageMin() {
 function browserWatch() {
   browserSync.init({
     server: {
-      baseDir: "./public",
+      baseDir: './public',
       reloadDebounce: 2000
     }
   });
   gulp.watch(
     [
-      "./source/**/**",
-      "!source/**/*.pug",
-      "!source/scss/**/**",
-      "!source/js/**/**"
+      './source/**/**',
+      '!source/**/*.pug',
+      '!source/scss/**/**',
+      '!source/js/**/**'
     ],
-    gulp.series("copy")
+    gulp.series(copy)
   );
-  gulp.watch("./source/**/*.pug", gulp.series("pug"));
+  gulp.watch('./source/**/*.pug', gulp.series(pug));
   gulp.watch(
-    ["./source/scss/**/*.sass", "./source/scss/**/*.scss"],
-    gulp.series("scss")
+    ['./source/scss/**/*.sass', './source/scss/**/*.scss'],
+    gulp.series(scss)
   );
-  gulp.watch(["./source/js/**/*.js"], gulp.series("babel"));
-  console.log("watching (•‾⌣‾•) ~");
+  gulp.watch([
+    './source/**/*.js',
+    '!source/js/all.js',
+  ],gulp.series(cleanJS,concatJS,babel))
+  console.log('watching (•‾⌣‾•) ~');
 }
 
 /*****************************************************
@@ -204,7 +221,7 @@ function browserWatch() {
  *****************************************************/
 
 function deploy() {
-  return gulp.src("./public/**/*").pipe($.ghPages());
+  return gulp.src('./public/**/*').pipe($.ghPages());
 }
 
 /*****************************************************
@@ -214,20 +231,31 @@ function deploy() {
 exports.deploy = deploy;
 exports.copy = copy;
 exports.clean = clean;
+exports.cleanJS = cleanJS;
 exports.copyBsVar = copyBsVar;
 exports.pug = pug;
 exports.scss = scss;
+exports.concatJS = concatJS;
 exports.babel = babel;
 
+
 exports.build = gulp.series(
-  gulp.series(clean, copy),
-  gulp.parallel(pug, babel, scss),
+  clean,
+  copy,
+  cleanJS,
+  concatJS,
+  babel,
+  gulp.parallel(pug, scss),
   // gulp.series(vendorJS, imageMin)
 );
 
 exports.default = gulp.series(
   clean,
   copy,
-  gulp.parallel(pug, babel, scss),
-  gulp.series(imageMin, browserWatch)
+  cleanJS,
+  concatJS,
+  babel,
+  gulp.parallel(pug, scss),
+  // gulp.series(vendorJS, imageMin)
+  gulp.series(browserWatch)
 );

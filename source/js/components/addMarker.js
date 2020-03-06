@@ -1,21 +1,19 @@
-const addMarker = importData => {
-  importData.forEach(element => {
-    //解構賦值寫法，宣告要從來源變數(element)接收解開的值之變數。
+const addMarker = (importData) => {
+  importData.forEach((element) => {
+    // 解構賦值寫法，宣告要從來源變數(element)接收解開的值之變數。
     const { geometry, properties } = element;
     // 判斷 background-color
     const adultStockNoMore = (() => {
       if (properties.mask_adult === 0) {
         return 'h-bg-info';
-      } else {
-        return 'h-bg-primary';
       }
+      return 'h-bg-primary';
     })();
     const childStockNoMore = (() => {
       if (properties.mask_child === 0) {
         return 'h-bg-info';
-      } else {
-        return 'h-bg-secondary';
       }
+      return 'h-bg-secondary';
     })();
     // 判斷 icon 顏色
     const iconColor = (() => {
@@ -28,9 +26,10 @@ const addMarker = importData => {
           iconSize: [25, 41],
           iconAnchor: [12, 41],
           popupAnchor: [1, -34],
-          shadowSize: [41, 41]
+          shadowSize: [41, 41],
         });
-      } else if (properties.mask_adult === 0 && properties.mask_child === 0) {
+      }
+      if (properties.mask_adult === 0 && properties.mask_child === 0) {
         return new L.Icon({
           iconUrl:
             'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
@@ -39,25 +38,24 @@ const addMarker = importData => {
           iconSize: [25, 41],
           iconAnchor: [12, 41],
           popupAnchor: [1, -34],
-          shadowSize: [41, 41]
-        });
-      } else {
-        return new L.Icon({
-          iconUrl:
-            'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-          shadowUrl:
-            'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-          popupAnchor: [1, -34],
-          shadowSize: [41, 41]
+          shadowSize: [41, 41],
         });
       }
+      return new L.Icon({
+        iconUrl:
+          'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl:
+          'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      });
     })();
     // 套上 marker
     markers.addLayer(
       L.marker([geometry.coordinates[1], geometry.coordinates[0]], {
-        icon: iconColor
+        icon: iconColor,
       }).bindPopup(`
   <div class="p-card" style="max-width: 200px">
     <div class="h-d-flex h-mb-3 h-align-items-center">
@@ -74,7 +72,7 @@ const addMarker = importData => {
       <div class="p-badges ${childStockNoMore}"><span class="h5 h-flex-1">兒童口罩</span><span>${properties.mask_child}</span></div>
     </div>
   </div>
-  `)
+  `),
     );
   });
   map.addLayer(markers);
